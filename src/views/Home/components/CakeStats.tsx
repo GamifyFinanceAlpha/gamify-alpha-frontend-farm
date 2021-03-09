@@ -29,7 +29,7 @@ const CakeStats = () => {
   const reflectedBalance = useReflectedBalance(getCakeAddress())
   const farms = useFarms();
   const blnPrice = usePriceCakeBusd();
-  const circSupply = totalSupply ? totalSupply.minus(burnedBalance) : new BigNumber(0);
+  const circSupply = totalSupply && totalSupply > burnedBalance ? totalSupply.minus(burnedBalance) : new BigNumber(0);
   const cakeSupply = getBalanceNumber(circSupply);
   const marketCap = blnPrice.times(circSupply);
 
