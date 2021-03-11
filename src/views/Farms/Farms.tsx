@@ -40,7 +40,7 @@ const Farms: React.FC<FarmsProps> = (farmsProps) => {
 
   const [stakedOnly, setStakedOnly] = useState(false)
 
-  const activeFarms = farmsLP.filter((farm) => !!farm.isToken === !!tokenMode)
+  const activeFarms = farmsLP.filter((farm) => !!farm.isToken === !!tokenMode && farm.multiplier !== '0X')
   const inactiveFarms = farmsLP.filter((farm) => !!farm.isToken === !!tokenMode && farm.multiplier === '0X')
 
   const stakedOnlyFarms = activeFarms.filter(
@@ -101,6 +101,9 @@ const Farms: React.FC<FarmsProps> = (farmsProps) => {
       </Heading>
       <Heading as="h2" color="secondary" mb="50px" style={{ textAlign: 'center' }}>
         {TranslateString(10000, 'Deposit Fee will be used to buyback BLN')}
+      </Heading>
+      <Heading as="h2" color="secondary" mb="50px" style={{ textAlign: 'center' }}>
+        If you staked before launch, use the <a href='https://old.deflate.finance/' style={{color: 'black'}}>old website!</a> Fees are refunded!
       </Heading>
       <FarmTabButtons stakedOnly={stakedOnly} setStakedOnly={setStakedOnly}/>
       <div>

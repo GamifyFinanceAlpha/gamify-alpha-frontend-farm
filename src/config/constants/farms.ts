@@ -8,10 +8,10 @@ const farms: FarmConfig[] = [
     tokenSymbol: 'BLN-BUSD LP',
     lpAddresses: {
       97: '',
-      56: '0xd50265306a1a3a183e423b685ab9ec4868c5c269',
+      56: '0xb1bfac4edd102d229dc719b940685b74b485b2d0',
     },
     tokenAddresses: {
-      56: '0x428a38a7bdca24cd22623bd427efc64077b56cc0',
+      56: '0xcf3452578a581dcf19f4a9c36c0caf617103128c',
       97: '',
     },
     quoteTokenSymbol: QuoteToken.BUSD,
@@ -23,10 +23,10 @@ const farms: FarmConfig[] = [
     tokenSymbol: 'BLN-BNB LP',
     lpAddresses: {
       97: '',
-      56: '0xd831fe972cf942f10fc70ef8c5bda040f8404fb6',
+      56: '0xf8adbe1a714e30311c2db2dff39d0fe8f2176a27',
     },
     tokenAddresses: {
-      56: '0x428a38a7bdca24cd22623bd427efc64077b56cc0',
+      56: '0xcf3452578a581dcf19f4a9c36c0caf617103128c',
       97: '',
     },
     quoteTokenSymbol: QuoteToken.BNB,
@@ -38,10 +38,10 @@ const farms: FarmConfig[] = [
     tokenSymbol: 'BLN',
     lpAddresses: {
       97: '',
-      56: '0xd50265306a1a3a183e423b685ab9ec4868c5c269',
+      56: '0xb1bfac4edd102d229dc719b940685b74b485b2d0',
     },
     tokenAddresses: {
-      56: '0x428a38a7bdca24cd22623bd427efc64077b56cc0',
+      56: '0xcf3452578a581dcf19f4a9c36c0caf617103128c',
       97: '',
     },
     quoteTokenSymbol: QuoteToken.BUSD,
@@ -71,7 +71,7 @@ const farms: FarmConfig[] = [
       56: '0x7561eee90e24f3b348e1087a005f78b4c8453524',
     },
     tokenAddresses: {
-      56: '0x428a38a7bdca24cd22623bd427efc64077b56cc0',
+      56: '0xcf3452578a581dcf19f4a9c36c0caf617103128c',
       97: '',
     },
     quoteTokenSymbol: QuoteToken.BNB,
@@ -188,7 +188,7 @@ const farms: FarmConfig[] = [
     tokenSymbol: 'BUSD',
     lpAddresses: {
       97: '',
-      56: '0xd50265306a1a3a183e423b685ab9ec4868c5c269', // ignored
+      56: '0xb1bfac4edd102d229dc719b940685b74b485b2d0', // ignored
     },
     tokenAddresses: {
       56: '0xe9e7cea3dedca5984780bafc599bd69add087d56',

@@ -1202,8 +1202,14 @@
     },
     {
       "data": {
+        "stringId": 9999,
+        "text": "If you staked before launch, use the <a href='https://old.deflate.finance/'>old website!</a>"
+      }
+    },
+    {
+      "data": {
         "stringId": 10000,
-        "text": "Staking BLN has no transaction fee!"
+        "text": "Staking BLN has no reflection fee!"
       }
     },
     {
