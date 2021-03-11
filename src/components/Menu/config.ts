@@ -12,11 +12,11 @@ const config: MenuEntry[] = [
     items: [
       {
         label: 'Buy Balloon',
-        href: 'https://exchange.pancakeswap.finance/#/swap?outputCurrency=0xcf3452578a581dcf19f4a9c36c0caf617103128c',
+        href: 'https://exchange.pancakeswap.finance/#/swap?outputCurrency=0x55c0bf68101fd8c0f56461df2732e358c2c6d0b2',
       },
       {
         label: 'Add Balloon Liquidity',
-        href: 'https://exchange.pancakeswap.finance/#/add/ETH/0xcf3452578a581dcf19f4a9c36c0caf617103128c',
+        href: 'https://exchange.pancakeswap.finance/#/add/ETH/0x55c0bf68101fd8c0f56461df2732e358c2c6d0b2',
       },
     ],
   },
@@ -36,11 +36,11 @@ const config: MenuEntry[] = [
     items: [
       {
         label: 'PancakeSwap',
-        href: 'https://pancakeswap.info/token/0xcf3452578a581dcf19f4a9c36c0caf617103128c',
+        href: 'https://pancakeswap.info/token/0x55c0bf68101fd8c0f56461df2732e358c2c6d0b2',
       },
       {
         label: 'BscScan',
-        href: 'https://bscscan.com/token/0xcf3452578a581dcf19f4a9c36c0caf617103128c',
+        href: 'https://bscscan.com/token/0x55c0bf68101fd8c0f56461df2732e358c2c6d0b2',
       }
     ],
   },

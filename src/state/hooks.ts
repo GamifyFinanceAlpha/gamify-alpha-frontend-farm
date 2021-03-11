@@ -70,9 +70,9 @@ export const usePriceBnbBusd = (): BigNumber => {
 }
 
 export const usePriceCakeBusd = (): BigNumber => {
-  const pid = 1; // BLN-BUSD LP
+  const pid = 24; // BLN-BUSD LP
   const farm = useFarmFromPid(pid);
-  return farm.tokenPriceVsQuote ? new BigNumber(farm.tokenPriceVsQuote) : ZERO;
+  return ZERO;
 }
 
 export const useTotalValue = (): BigNumber => {
