@@ -2,51 +2,51 @@ import contracts from './contracts'
 import { FarmConfig, QuoteToken } from './types'
 
 const farms: FarmConfig[] = [
-  // {
-  //   pid: 24,
-  //   isToken: false,
-  //   tokenSymbol: 'BLN-BUSD LP',
-  //   lpAddresses: {
-  //     97: '',
-  //     56: '0x0000000000000000000000000000000000000000',
-  //   },
-  //   tokenAddresses: {
-  //     56: '0x55c0bf68101fd8c0f56461df2732e358c2c6d0b2',
-  //     97: '',
-  //   },
-  //   quoteTokenSymbol: QuoteToken.BUSD,
-  //   quoteTokenAdresses: contracts.busd,
-  // },
-  // {
-  //   pid: 25,
-  //   isToken: false,
-  //   tokenSymbol: 'BLN-BNB LP',
-  //   lpAddresses: {
-  //     97: '',
-  //     56: '0x0000000000000000000000000000000000000001',
-  //   },
-  //   tokenAddresses: {
-  //     56: '0x55c0bf68101fd8c0f56461df2732e358c2c6d0b2',
-  //     97: '',
-  //   },
-  //   quoteTokenSymbol: QuoteToken.BNB,
-  //   quoteTokenAdresses: contracts.wbnb,
-  // },
-  // {
-  //   pid: 23,
-  //   isToken: true,
-  //   tokenSymbol: 'BLN',
-  //   lpAddresses: {
-  //     97: '',
-  //     56: '0x0000000000000000000000000000000000000000',
-  //   },
-  //   tokenAddresses: {
-  //     56: '0x55c0bf68101fd8c0f56461df2732e358c2c6d0b2',
-  //     97: '',
-  //   },
-  //   quoteTokenSymbol: QuoteToken.BUSD,
-  //   quoteTokenAdresses: contracts.busd,
-  // },
+  {
+    pid: 24,
+    isToken: false,
+    tokenSymbol: 'BLN-BUSD LP',
+    lpAddresses: {
+      97: '',
+      56: '0x2d2bb2c421f0b77df203dcad2bca43692027343e',
+    },
+    tokenAddresses: {
+      56: '0x55c0bf68101fd8c0f56461df2732e358c2c6d0b2',
+      97: '',
+    },
+    quoteTokenSymbol: QuoteToken.BUSD,
+    quoteTokenAdresses: contracts.busd,
+  },
+  {
+    pid: 25,
+    isToken: false,
+    tokenSymbol: 'BLN-BNB LP',
+    lpAddresses: {
+      97: '',
+      56: '0x5a2da6047af1b6dca0fb9f087fe20b35069963ed',
+    },
+    tokenAddresses: {
+      56: '0x55c0bf68101fd8c0f56461df2732e358c2c6d0b2',
+      97: '',
+    },
+    quoteTokenSymbol: QuoteToken.BNB,
+    quoteTokenAdresses: contracts.wbnb,
+  },
+  {
+    pid: 23,
+    isToken: true,
+    tokenSymbol: 'BLN',
+    lpAddresses: {
+      97: '',
+      56: '0x2d2bb2c421f0b77df203dcad2bca43692027343e',
+    },
+    tokenAddresses: {
+      56: '0x55c0bf68101fd8c0f56461df2732e358c2c6d0b2',
+      97: '',
+    },
+    quoteTokenSymbol: QuoteToken.BUSD,
+    quoteTokenAdresses: contracts.busd,
+  },
   {
     pid: 0,
     isToken: false,
