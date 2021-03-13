@@ -68,6 +68,11 @@ const config: MenuEntry[] = [
     href: 'https://deflatefi.gitbook.io/deflate-finance/roadmap'
   },
   {
+    label: 'Audit by TechRate',
+    icon: 'AuditIcon',
+    href: 'https://deflate.finance/audit/TechRate.pdf'
+  },
+  {
     label: 'Old',
     icon: 'IfoIcon',
     href: 'https://old.deflate.finance/'
