@@ -12,7 +12,7 @@ const config: MenuEntry[] = [
     items: [
       {
         label: 'Buy Balloon',
-        href: 'https://exchange.pancakeswap.finance/#/swap?outputCurrency=0x55c0bf68101fd8c0f56461df2732e358c2c6d0b2',
+        href: 'https://deflatefi.gitbook.io/deflate-finance/faq/buy',
       },
       {
         label: 'Add Balloon Liquidity',
@@ -61,6 +61,11 @@ const config: MenuEntry[] = [
         href: "https://medium.com/@deflatefi",
       },
     ],
+  },
+  {
+    label: 'Roadmap',
+    icon: 'RoadmapIcon',
+    href: 'https://deflatefi.gitbook.io/deflate-finance/roadmap'
   },
   {
     label: 'Old',

@@ -28,15 +28,19 @@ interface FarmCardActionsProps {
 const CardActions: React.FC<FarmCardActionsProps> = ({ farm, ethereum, account }) => {
   const TranslateString = useI18n()
   const [requestedApproval, setRequestedApproval] = useState(false)
-  const { pid, tokenAddresses, isToken, depositFeeBP } = useFarmFromPid(farm.pid)
+  const { pid, tokenAddresses, lpAddresses, isToken, depositFeeBP } = useFarmFromPid(farm.pid)
   const { allowance, tokenBalance, stakedBalance, earnings } = useFarmUser(pid)
-  const address = tokenAddresses[process.env.REACT_APP_CHAIN_ID];
+  const tokenAddress = tokenAddresses[process.env.REACT_APP_CHAIN_ID];
+  const lpAddress = lpAddresses[process.env.REACT_APP_CHAIN_ID];
   const name = farm.tokenSymbol.toUpperCase()
   const isApproved = account && allowance && allowance.isGreaterThan(0)
 
   const contract = useMemo(() => {
-    return getContract(ethereum as provider, address);
-  }, [ethereum, address])
+    if (isToken) {
+      return getContract(ethereum as provider, tokenAddress);
+    }
+    return getContract(ethereum as provider, lpAddress);
+  }, [ethereum, tokenAddress, lpAddress, isToken])
 
   const { onApprove } = useApprove(contract)
 

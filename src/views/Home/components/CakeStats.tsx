@@ -6,6 +6,8 @@ import { getBalanceNumber } from 'utils/formatBalance'
 import { useTotalSupply, useBurnedBalance, useReflectedBalance } from 'hooks/useTokenBalance'
 import useI18n from 'hooks/useI18n'
 import { getCakeAddress } from 'utils/addressHelpers'
+import Button from "@material-ui/core/Button";
+import Tooltip from "@material-ui/core/Tooltip";
 import CardValue from './CardValue'
 import { useFarms, usePriceCakeBusd } from '../../../state/hooks'
 
@@ -57,7 +59,16 @@ const CakeStats = () => {
           <CardValue fontSize="14px" value={getBalanceNumber(burnedBalance)} decimals={0} />
         </Row>
         <Row>
-          <Text fontSize="14px">{TranslateString(730, 'Total BLN Reflected')}</Text>
+          <Text fontSize="14px">
+            {TranslateString(730, 'Total BLN Reflected')}
+            <Tooltip 
+              title="This is the amount sent back to holders from each transaction" 
+              placement="top"
+              style={{minWidth:0, padding:2}}
+            >
+              <Button>🛈</Button>
+            </Tooltip>
+          </Text>
           <CardValue fontSize="14px" value={getBalanceNumber(reflectedBalance)} decimals={0} />
         </Row>
         <Row>
