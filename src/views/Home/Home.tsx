@@ -57,12 +57,12 @@ const Home: React.FC = () => {
 
   return (
     <Page>
-      <Hero>
+      {/* <Hero>
         <Heading as="h1" size="xl" mb="24px" color="secondary">
           {TranslateString(576, 'Deflate Finance')}
         </Heading>
         <Text>{TranslateString(578, 'The only yield farm for Warriors on the journey to Valhalla on Binance Smart Chain.')}</Text>
-      </Hero>
+      </Hero> */}
       <div>
         <Cards>
           <FarmStakingCard />

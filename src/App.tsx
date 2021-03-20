@@ -1,12 +1,15 @@
 import React, { useEffect, Suspense, lazy } from 'react'
 import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
-import { ResetCSS } from '@pancakeswap-libs/uikit'
 import BigNumber from 'bignumber.js'
 import { useFetchPublicData } from 'state/hooks'
 import GlobalStyle from './style/Global'
+import ResetCSS from './style/ResetCSS'
 import Menu from './components/Menu'
+import Navigation from './components/Navigation'
 import PageLoader from './components/PageLoader'
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'style3.css'
 
 // Route-based code splitting
 // Only pool is included in the main bundle because of it's the most visited page'
@@ -35,8 +38,9 @@ const App: React.FC = () => {
   return (
     <Router>
       <ResetCSS />
+      <link href="https://fonts.googleapis.com/css?family=Open+Sans|Quicksand" rel="stylesheet"/>
       <GlobalStyle />
-      <Menu>
+      <Navigation />
         <Suspense fallback={<PageLoader />}>
           <Switch>
             <Route path="/" exact>
@@ -48,21 +52,9 @@ const App: React.FC = () => {
             <Route path="/tanks">
               <Farms tokenMode/>
             </Route>
-            {/* <Route path="/pools"> */}
-            {/*  <Pools /> */}
-            {/* </Route> */}
-            {/* Redirect */}
-            {/* <Route path="/staking"> */}
-            {/*  <Redirect to="/pools" /> */}
-            {/* </Route> */}
-            {/* <Route path="/syrup"> */}
-            {/*  <Redirect to="/pools" /> */}
-            {/* </Route> */}
-            {/* 404 */}
             <Route component={NotFound} />
           </Switch>
         </Suspense>
-      </Menu>
     </Router>
   )
 }
