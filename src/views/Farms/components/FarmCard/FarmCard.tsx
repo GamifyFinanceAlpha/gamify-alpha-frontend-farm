@@ -13,7 +13,8 @@ import CardActionsContainer from './CardActionsContainer'
 import ApyButton from './ApyButton'
 
 export interface FarmWithStakedValue extends Farm {
-  apy?: BigNumber
+  apy?: BigNumber,
+  liquidity?: BigNumber
 }
 
 const RainbowLight = keyframes`
