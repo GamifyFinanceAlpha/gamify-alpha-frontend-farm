@@ -12,9 +12,8 @@ export interface ITableProps {
 }
 
 const Container = styled.div`
-  filter: ${({ theme }) => theme.card.dropShadow};
   width: 100%;
-  background: ${({ theme }) => theme.card.background};
+  background: #222222;
   border-radius: 16px;
   margin: 16px 0px;
 `
@@ -62,7 +61,7 @@ const FarmTable: React.FC<ITableProps> = (props) => {
   const TranslateString = useI18n()
   const { data, columns } = props
 
-  const { rows } = useTable(columns, data, { sortable: true, sortColumn: 'farm' })
+  const { rows } = useTable(columns, data, { sortable: false})
 
   const scrollToTop = (): void => {
     tableWrapperEl.current.scrollIntoView({

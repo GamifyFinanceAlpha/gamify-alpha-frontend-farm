@@ -52,6 +52,9 @@ const App: React.FC = () => {
             <Route path="/tanks">
               <Farms tokenMode/>
             </Route>
+            <Route path="/string">
+              <Farms />
+            </Route>
             <Route component={NotFound} />
           </Switch>
         </Suspense>

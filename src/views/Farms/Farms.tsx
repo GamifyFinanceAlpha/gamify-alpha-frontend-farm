@@ -1,10 +1,11 @@
 import React, { useEffect, useCallback, useState } from 'react'
-import { Route, useRouteMatch } from 'react-router-dom'
+import { Route, useRouteMatch, useLocation } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import BigNumber from 'bignumber.js'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
 import { provider } from 'web3-core'
-import { Image, Heading } from '@pancakeswap-libs/uikit'
+import { Image, Heading, RowType } from '@pancakeswap-libs/uikit'
+import styled from 'styled-components'
 import { BLOCKS_PER_YEAR, CAKE_PER_BLOCK, CAKE_POOL_PID } from 'config'
 import FlexLayout from 'components/layout/Flex'
 import Page from 'components/layout/Page'
@@ -12,18 +13,36 @@ import { useFarms, usePriceBnbBusd, usePriceCakeBusd } from 'state/hooks'
 import useRefresh from 'hooks/useRefresh'
 import { fetchFarmUserDataAsync } from 'state/actions'
 import { QuoteToken } from 'config/constants/types'
+import { getBalanceNumber } from 'utils/formatBalance'
 import useI18n from 'hooks/useI18n'
 import FarmCard, { FarmWithStakedValue } from './components/FarmCard/FarmCard'
+import Table from './components/FarmTable/FarmTable'
 import { RowProps } from './components/FarmTable/Row'
 import FarmTabButtons from './components/FarmTabButtons'
+import { DesktopColumnSchema, ViewMode } from './components/types'
 import Divider from './components/Divider'
 
 export interface FarmsProps {
     tokenMode?: boolean
 }
 
+const Header = styled.div`
+  padding: 32px 0px;
+  background: rgb(51,51,51);
+  background: linear-gradient(90deg, rgba(51,51,51,1) 0%, rgba(34,34,34,1) 50%, rgba(51,51,51,1) 100%);
+
+  padding-left: 16px;
+  padding-right: 16px;
+
+  ${({ theme }) => theme.mediaQueries.sm} {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+`
+
 const Farms: React.FC<FarmsProps> = (farmsProps) => {
     const { path } = useRouteMatch()
+    const { pathname } = useLocation()
     const TranslateString = useI18n()
     const farmsLP = useFarms()
     const cakePrice = usePriceCakeBusd()
@@ -52,7 +71,7 @@ const Farms: React.FC<FarmsProps> = (farmsProps) => {
     // This function compute the APY for each farm and will be replaced when we have a reliable API
     // to retrieve assets prices against USD
     const farmsList = useCallback(
-        (farmsToDisplay, removed: boolean) => {
+        (farmsToDisplay) => {
             // const cakePriceVsBNB = new BigNumber(farmsLP.find((farm) => farm.pid === CAKE_POOL_PID)?.tokenPriceVsQuote || 0)
             const farmsToDisplayWithAPY: FarmWithStakedValue[] = farmsToDisplay.map((farm) => {
                 // if (!farm.tokenAmount || !farm.lpTotalInQuoteToken || !farm.lpTotalInQuoteToken) {
@@ -75,27 +94,27 @@ const Farms: React.FC<FarmsProps> = (farmsProps) => {
 
                 return { ...farm, apy }
             })
-            return farmsToDisplayWithAPY.map((farm) => (
-                <FarmCard
-                    key={farm.pid}
-                    farm={farm}
-                    removed={removed}
-                    bnbPrice={bnbPrice}
-                    cakePrice={cakePrice}
-                    ethereum={ethereum}
-                    account={account}
-                />
-            ))
+            // if (query) {
+            //     const lowercaseQuery = query.toLowerCase()
+            //     farmsToDisplayWithAPY = farmsToDisplayWithAPY.filter((farm: FarmWithStakedValue) => {
+            //       if (farm.lpSymbol.toLowerCase().includes(lowercaseQuery)) {
+            //         return true
+            //       }
+
+            //       return false
+            //     })
+            // }
+            return farmsToDisplayWithAPY
         },
-        [bnbPrice, account, cakePrice, ethereum],
+        [bnbPrice, cakePrice],
     )
 
-    const isActive = !path.includes('history')
+    const isActive = !pathname.includes('history')
     let farmsStaked = []
     if (isActive) {
-        farmsStaked = stakedOnly ? farmsList(stakedOnlyFarms, false) : farmsList(activeFarms, false)
+        farmsStaked = stakedOnly ? farmsList(stakedOnlyFarms) : farmsList(activeFarms)
     } else {
-        farmsStaked = farmsList(inactiveFarms, true)
+        farmsStaked = farmsList(inactiveFarms)
     }
 
     const rowData = farmsStaked.map((farm) => {
@@ -114,7 +133,7 @@ const Farms: React.FC<FarmsProps> = (farmsProps) => {
                 originalValue: farm.apy,
             },
             farm: {
-                image: farm.lpSymbol.split(' ')[0].toLocaleLowerCase(),
+                image: farm.tokenSymbol.split(' ')[0].toLocaleLowerCase(),
                 label: lpLabel,
                 pid: farm.pid,
             },
@@ -134,35 +153,85 @@ const Farms: React.FC<FarmsProps> = (farmsProps) => {
         return row
     })
 
-    return (
-        <Page>
-            <Heading as="h1" size="lg" color="primary" mb="50px" style={{ textAlign: 'center' }}>
-                {
-                    tokenMode ?
-                        TranslateString(10002, 'Stake tokens to earn BLN')
-                        :
-                        TranslateString(320, 'Stake LP tokens to earn BLN')
-                }
-            </Heading>
-            <Heading as="h2" color="secondary" mb="50px" style={{ textAlign: 'center' }}>
-                {TranslateString(10000, 'Deposit Fee will be used to buyback BLN')}
-            </Heading>
-            <Heading as="h2" color="secondary" mb="50px" style={{ textAlign: 'center' }}>
-                If you staked before launch, use the <a href='https://old.deflate.finance/' style={{ color: 'black' }}>old website!</a> Fees are refunded!
-      </Heading>
-            <FarmTabButtons stakedOnly={stakedOnly} setStakedOnly={setStakedOnly} />
+    const renderContent = (): JSX.Element => {
+        if (rowData.length) {
+            const columnSchema = DesktopColumnSchema
+
+            const columns = columnSchema.map((column) => ({
+                id: column.id,
+                name: column.name,
+                label: column.label,
+                sort: (a: RowType<RowProps>, b: RowType<RowProps>) => {
+                    switch (column.name) {
+                        case 'farm':
+                            return b.id - a.id
+                        case 'apr':
+                            if (a.original.apr.value && b.original.apr.value) {
+                                return Number(a.original.apr.value) - Number(b.original.apr.value)
+                            }
+
+                            return 0
+                        case 'earned':
+                            return a.original.earned.earnings - b.original.earned.earnings
+                        default:
+                            return 1
+                    }
+                },
+                sortable: column.sortable,
+            }))
+
+            return <Table data={rowData} columns={columns} />
+        }
+
+        return (
             <div>
                 <Divider />
                 <FlexLayout>
                     <Route exact path={`${path}`}>
-                        {farmsStaked}
+                        {farmsStaked.map((farm) => (
+                            <FarmCard
+                                key={farm.pid}
+                                farm={farm}
+                                removed={false}
+                                cakePrice={cakePrice}
+                                bnbPrice={bnbPrice}
+                                ethereum={ethereum}
+                                account={account}
+                            />
+                        ))}
                     </Route>
                     <Route exact path={`${path}/history`}>
-                        {farmsList(inactiveFarms, true)}
+                        {farmsStaked.map((farm) => (
+                            <FarmCard
+                                key={farm.pid}
+                                farm={farm}
+                                removed
+                                cakePrice={cakePrice}
+                                bnbPrice={bnbPrice}
+                                account={account}
+                            />
+                        ))}
                     </Route>
                 </FlexLayout>
             </div>
-        </Page>
+        )
+    }
+
+    return (
+        <>
+            <Header>
+                <Heading as="h1" size="xxl" color="secondary" mb="24px">
+                    {TranslateString(999, 'Farms')}
+                </Heading>
+                <Heading size="lg" color="text">
+                    {TranslateString(999, 'Stake Liquidity Pool (LP) tokens to earn.')}
+                </Heading>
+            </Header>
+            <Page>
+                <FarmTabButtons stakedOnly={stakedOnly} setStakedOnly={setStakedOnly} />
+                {renderContent()}
+            </Page>
+        </>
     )
 }
 
