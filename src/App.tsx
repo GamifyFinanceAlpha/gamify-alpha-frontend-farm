@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-d
 import { useWallet } from '@binance-chain/bsc-use-wallet'
 import BigNumber from 'bignumber.js'
 import { useFetchPublicData } from 'state/hooks'
+import useGetDocumentTitlePrice from 'hooks/useGetDocumentTitlePrice'
 import GlobalStyle from './style/Global'
 import ResetCSS from './style/ResetCSS'
 // import Menu from './components/Menu'
@@ -34,6 +35,7 @@ const App: React.FC = () => {
   }, [account, connect])
 
   useFetchPublicData()
+  useGetDocumentTitlePrice()
 
   return (
     <Router>

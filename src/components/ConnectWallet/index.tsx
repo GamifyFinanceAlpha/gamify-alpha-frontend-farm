@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import { Button } from 'react-bootstrap';
 import { useWalletModal } from '@pancakeswap-libs/uikit'
 import useI18n from 'hooks/useI18n'
@@ -21,7 +21,6 @@ const ConnectWallet: React.FC<ConnectWalletProps> = ({
     return (
         <Button
             onClick={account ? onPresentAccountModal : onPresentConnectModal}
-            id="connect-wallet"
             variant="danger"
             className="rounded-pill">
             {showAccount}

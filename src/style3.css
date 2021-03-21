@@ -55,12 +55,12 @@ a:hover, a:focus {
     margin-left: auto;
 }
 
-.navbar2:before, .navbar2 .container:before, .navbar-header2:before, .nav2:before {
+.navbar2:before, .navbar2 .container:before, .container-fluid:before, .navbar-header2:before, .nav2:before {
     display: table;
     content: " ";
 }
 
-.navbar2:after, .navbar2 .container:after, .navbar-header2:after, .nav2:after {
+.navbar2:after, .navbar2 .container:after, .container-fluid:after, .navbar-header2:after, .nav2:after {
     clear: both;
     display: table;
     content: " ";

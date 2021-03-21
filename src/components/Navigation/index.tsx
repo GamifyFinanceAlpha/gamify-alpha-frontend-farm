@@ -21,6 +21,8 @@ const Navigation = (props) => {
 
     const { pathname } = useLocation()
 
+    console.log(cakePriceUsd)
+
     return (
         // <UikitMenu
         //   account={account}
@@ -45,7 +47,7 @@ const Navigation = (props) => {
                     </a>
                 </div>
                 <div id="navbar">
-                    <ul className="nav2 navbar-nav2 navbar-right2">
+                    <ul className="nav2 navbar-nav2 navbar-right2" id="connect-wallet">
                         <li>
                             <b>
                                 <ConnectWallet
