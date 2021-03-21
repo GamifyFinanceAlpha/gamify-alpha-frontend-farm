@@ -5,7 +5,7 @@ import BigNumber from 'bignumber.js'
 import { Button } from 'react-bootstrap'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
 import { provider } from 'web3-core'
-import { Heading, RowType } from '@pancakeswap-libs/uikit'
+import { Heading, RowType, Toggle, Text } from '@pancakeswap-libs/uikit'
 import styled from 'styled-components'
 import { TiFlash } from "react-icons/ti";
 import { MdSwapHoriz } from "react-icons/md";
@@ -20,10 +20,12 @@ import { QuoteToken } from 'config/constants/types'
 import { getBalanceNumber } from 'utils/formatBalance'
 import useI18n from 'hooks/useI18n'
 import FarmCard, { FarmWithStakedValue } from './components/FarmCard/FarmCard'
+import ToggleView from './components/ToggleView/ToggleView'
 import Table from './components/FarmTable/FarmTable'
 import { RowProps } from './components/FarmTable/Row'
 import FarmTabButtons from './components/FarmTabButtons'
-import { DesktopColumnSchema } from './components/types'
+import { DesktopColumnSchema, ViewMode } from './components/types'
+import Select, { OptionProps } from './components/Select/Select'
 
 export interface FarmsProps {
     tokenMode?: boolean
@@ -43,6 +45,70 @@ const Header = styled.div`
   }
 `
 
+const ControlContainer = styled.div`
+  display: flex;
+  width: 100%;
+  align-items: center;
+  position: relative;
+
+  justify-content: space-between;
+  flex-direction: column;
+
+  ${({ theme }) => theme.mediaQueries.sm} {
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 16px 32px;
+  }
+`
+
+const ToggleWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
+
+  ${Text} {
+    margin-left: 8px;
+  }
+`
+
+const LabelWrapper = styled.div`
+  > ${Text} {
+    font-size: 12px;
+  }
+`
+
+const FilterContainer = styled.div`
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 8px 0px;
+
+  ${({ theme }) => theme.mediaQueries.sm} {
+    width: auto;
+    padding: 0;
+  }
+`
+
+const ViewControls = styled.div`
+  flex-wrap: wrap;
+  justify-content: space-between;
+  display: flex;
+  align-items: center;
+  width: 100%;
+
+  > div {
+    padding: 8px 0px;
+  }
+
+  ${({ theme }) => theme.mediaQueries.sm} {
+    justify-content: flex-start;
+    width: auto;
+
+    > div {
+      padding: 0;
+    }
+  }
+`
 const Farms: React.FC<FarmsProps> = (farmsProps) => {
     const { path } = useRouteMatch()
     const { pathname } = useLocation()
@@ -51,6 +117,9 @@ const Farms: React.FC<FarmsProps> = (farmsProps) => {
     const farmsLP = useFarms()
     const cakePrice = usePriceCakeBusd()
     const bnbPrice = usePriceBnbBusd()
+    const [query, setQuery] = useState('')
+    const [viewMode, setViewMode] = useState(ViewMode.TABLE)
+    const [sortOption, setSortOption] = useState('hot')
     const { account, ethereum }: { account: string; ethereum: provider } = useWallet()
     const { tokenMode } = farmsProps;
 
@@ -201,7 +270,7 @@ const Farms: React.FC<FarmsProps> = (farmsProps) => {
     })
 
     const renderContent = (): JSX.Element => {
-        if (rowData.length) {
+        if (viewMode === ViewMode.TABLE && rowData.length) {
             const columnSchema = DesktopColumnSchema
             const columns = columnSchema.map((column) => ({
                 id: column.id,
@@ -262,6 +331,10 @@ const Farms: React.FC<FarmsProps> = (farmsProps) => {
         )
     }
 
+    const handleSortOptionChange = (option: OptionProps): void => {
+        setSortOption(option.value)
+      }
+
     return (
         <>
             <Header>
@@ -274,7 +347,52 @@ const Farms: React.FC<FarmsProps> = (farmsProps) => {
                 </Heading>
             </Header>
             <Page>
-                <FarmTabButtons stakedOnly={stakedOnly} setStakedOnly={setStakedOnly} />
+                {/* <FarmTabButtons stakedOnly={stakedOnly} setStakedOnly={setStakedOnly} /> */}
+                <ControlContainer>
+                    <ViewControls>
+                        <ToggleView viewMode={viewMode} onToggle={(mode: ViewMode) => setViewMode(mode)} />
+                        <ToggleWrapper>
+                            <Toggle checked={stakedOnly} onChange={() => setStakedOnly(!stakedOnly)} />
+                            <Text> {TranslateString(1116, 'Staked only')}</Text>
+                        </ToggleWrapper>
+                        {/* <FarmTabButtons /> */}
+                    </ViewControls>
+                    <FilterContainer>
+                        <LabelWrapper>
+                            <Text>SORT BY</Text>
+                            <Select
+                                options={[
+                                    {
+                                        label: 'Hot',
+                                        value: 'hot',
+                                    },
+                                    {
+                                        label: 'APR',
+                                        value: 'apr',
+                                    },
+                                    {
+                                        label: 'Multiplier',
+                                        value: 'multiplier',
+                                    },
+                                    {
+                                        label: 'Earned',
+                                        value: 'earned',
+                                    },
+                                    {
+                                        label: 'Liquidity',
+                                        value: 'liquidity',
+                                    },
+                                ]}
+                                onChange={handleSortOptionChange}
+                            />
+                        </LabelWrapper>
+                        {/* <LabelWrapper style={{ marginLeft: 16 }}>
+                            <Text>SEARCH</Text>
+                            <SearchInput onChange={handleChangeQuery} value={query} />
+                        </LabelWrapper> */}
+                    </FilterContainer>
+                </ControlContainer>
+
                 {renderContent()}
             </Page>
         </>
