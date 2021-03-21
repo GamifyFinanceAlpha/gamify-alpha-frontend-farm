@@ -13,8 +13,8 @@ import CardActionsContainer from './CardActionsContainer'
 import ApyButton from './ApyButton'
 
 export interface FarmWithStakedValue extends Farm {
-  apy?: BigNumber,
-  liquidity?: BigNumber
+    apy?: BigNumber,
+    liquidity?: BigNumber
 }
 
 const RainbowLight = keyframes`
@@ -80,108 +80,108 @@ const ExpandingWrapper = styled.div<{ expanded: boolean }>`
 `
 
 interface FarmCardProps {
-  farm: FarmWithStakedValue
-  removed: boolean
-  cakePrice?: BigNumber
-  bnbPrice?: BigNumber
-  ethereum?: provider
-  account?: string
+    farm: FarmWithStakedValue
+    removed: boolean
+    cakePrice?: BigNumber
+    bnbPrice?: BigNumber
+    ethereum?: provider
+    account?: string
 }
 
 const FarmCard: React.FC<FarmCardProps> = ({ farm, removed, cakePrice, bnbPrice, ethereum, account }) => {
-  const TranslateString = useI18n()
+    const TranslateString = useI18n()
 
-  const [showExpandableSection, setShowExpandableSection] = useState(false)
+    const [showExpandableSection, setShowExpandableSection] = useState(false)
 
-  // We assume the token name is coin pair + lp e.g. CAKE-BNB LP, LINK-BNB LP,
-  // NAR-CAKE LP. The images should be cake-bnb.svg, link-bnb.svg, nar-cake.svg
-  // const farmImage = farm.lpSymbol.split(' ')[0].toLocaleLowerCase()
-  const farmImage = farm.isToken ? farm.tokenSymbol.toLowerCase() : farm.tokenSymbol.toLowerCase().slice(0, -3)
+    // We assume the token name is coin pair + lp e.g. CAKE-BNB LP, LINK-BNB LP,
+    // NAR-CAKE LP. The images should be cake-bnb.svg, link-bnb.svg, nar-cake.svg
+    // const farmImage = farm.lpSymbol.split(' ')[0].toLocaleLowerCase()
+    const farmImage = farm.isToken ? farm.tokenSymbol.toLowerCase() : farm.tokenSymbol.toLowerCase().slice(0, -3)
 
-  const totalValue: BigNumber = useMemo(() => {
-    if (!farm.lpTotalInQuoteToken) {
-      return null
-    }
-    if (farm.quoteTokenSymbol === QuoteToken.BNB) {
-      return bnbPrice.times(farm.lpTotalInQuoteToken)
-    }
-    if (farm.quoteTokenSymbol === QuoteToken.CAKE) {
-      return cakePrice.times(farm.lpTotalInQuoteToken)
-    }
-    return farm.lpTotalInQuoteToken
-  }, [bnbPrice, cakePrice, farm.lpTotalInQuoteToken, farm.quoteTokenSymbol])
+    const totalValue: BigNumber = useMemo(() => {
+        if (!farm.lpTotalInQuoteToken) {
+            return null
+        }
+        if (farm.quoteTokenSymbol === QuoteToken.BNB) {
+            return bnbPrice.times(farm.lpTotalInQuoteToken)
+        }
+        if (farm.quoteTokenSymbol === QuoteToken.CAKE) {
+            return cakePrice.times(farm.lpTotalInQuoteToken)
+        }
+        return farm.lpTotalInQuoteToken
+    }, [bnbPrice, cakePrice, farm.lpTotalInQuoteToken, farm.quoteTokenSymbol])
 
-  const totalValueFormatted = totalValue
-    ? `$${Number(totalValue).toLocaleString(undefined, { maximumFractionDigits: 0 })}`
-    : '-'
+    const totalValueFormatted = totalValue
+        ? `$${Number(totalValue).toLocaleString(undefined, { maximumFractionDigits: 0 })}`
+        : '-'
 
-  const earnLabel = 'BLN'
-  const farmAPY = farm.apy && farm.apy.times(new BigNumber(100)).toNumber().toLocaleString(undefined, {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  })
+    const earnLabel = 'BLN'
+    const farmAPY = farm.apy && farm.apy.times(new BigNumber(100)).toNumber().toLocaleString(undefined, {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+    })
 
-  const { quoteTokenAdresses, quoteTokenSymbol, tokenAddresses } = farm
+    const { quoteTokenAdresses, quoteTokenSymbol, tokenAddresses } = farm
 
-  return (
-    <FCard>
-      {farm.tokenSymbol.includes('BLN') && <StyledCardAccent />}
-      <CardHeading
-        tokenSymbol={farm.tokenSymbol}
-        multiplier={farm.multiplier}
-        depositFee={farm.depositFeeBP}
-        farmImage={farmImage}
-      />
-      {!removed && (
-        <Flex justifyContent='space-between' alignItems='center'>
-          <Text>{TranslateString(352, 'APR')}:</Text>
-          <Text bold style={{ display: 'flex', alignItems: 'center' }}>
-            {farm.apy ? (
-              <>
-                <ApyButton
-                  tokenSymbol={farm.tokenSymbol}
-                  quoteTokenAdresses={quoteTokenAdresses}
-                  quoteTokenSymbol={quoteTokenSymbol}
-                  tokenAddresses={tokenAddresses}
-                  cakePrice={cakePrice}
-                  apy={farm.apy}
-                />
-                {farmAPY}%
+    return (
+        <FCard>
+            {farm.tokenSymbol.includes('BLN') && <StyledCardAccent />}
+            <CardHeading
+                tokenSymbol={farm.tokenSymbol}
+                multiplier={farm.multiplier}
+                depositFee={farm.depositFeeBP}
+                farmImage={farmImage}
+            />
+            {!removed && (
+                <Flex justifyContent='space-between' alignItems='center'>
+                    <Text>{TranslateString(352, 'APR')}:</Text>
+                    <Text bold style={{ display: 'flex', alignItems: 'center' }}>
+                        {farm.apy ? (
+                            <>
+                                <ApyButton
+                                    tokenSymbol={farm.tokenSymbol}
+                                    quoteTokenAdresses={quoteTokenAdresses}
+                                    quoteTokenSymbol={quoteTokenSymbol}
+                                    tokenAddresses={tokenAddresses}
+                                    cakePrice={cakePrice}
+                                    apy={farm.apy}
+                                />
+                                {farmAPY}%
               </>
-            ) : (
-              <Skeleton height={24} width={80} />
+                        ) : (
+                            <Skeleton height={24} width={80} />
+                        )}
+                    </Text>
+                </Flex>
             )}
-          </Text>
-        </Flex>
-      )}
-      <Flex justifyContent='space-between'>
-        <Text>{TranslateString(318, 'Earn')}:</Text>
-        <Text bold>{earnLabel}</Text>
-      </Flex>
-      <Flex justifyContent='space-between'>
-        <Text style={{ fontSize: '24px' }}>{TranslateString(10001, 'Deposit Fee')}:</Text>
-        <Text bold style={{ fontSize: '24px' }}>{(farm.depositFeeBP / 100)}%</Text>
-      </Flex>
-      <CardActionsContainer farm={farm} ethereum={ethereum} account={account} />
-      <Divider />
-      <ExpandableSectionButton
-        onClick={() => setShowExpandableSection(!showExpandableSection)}
-        expanded={showExpandableSection}
-      />
-      <ExpandingWrapper expanded={showExpandableSection}>
-        <DetailsSection
-          removed={removed}
-          isToken={farm.isToken}
-          bscScanAddress={`https://bscscan.com/token/${farm.tokenAddresses[process.env.REACT_APP_CHAIN_ID]}`}
-          totalValueFormatted={totalValueFormatted}
-          tokenSymbol={farm.tokenSymbol}
-          quoteTokenAdresses={quoteTokenAdresses}
-          quoteTokenSymbol={quoteTokenSymbol}
-          tokenAddresses={tokenAddresses}
-        />
-      </ExpandingWrapper>
-    </FCard>
-  )
+            <Flex justifyContent='space-between'>
+                <Text>{TranslateString(318, 'Earn')}:</Text>
+                <Text bold>{earnLabel}</Text>
+            </Flex>
+            <Flex justifyContent='space-between'>
+                <Text style={{ fontSize: '24px' }}>{TranslateString(10001, 'Deposit Fee')}:</Text>
+                <Text bold style={{ fontSize: '24px' }}>{(farm.depositFeeBP / 100)}%</Text>
+            </Flex>
+            <CardActionsContainer farm={farm} ethereum={ethereum} account={account} />
+            <Divider />
+            <ExpandableSectionButton
+                onClick={() => setShowExpandableSection(!showExpandableSection)}
+                expanded={showExpandableSection}
+            />
+            <ExpandingWrapper expanded={showExpandableSection}>
+                <DetailsSection
+                    removed={removed}
+                    isToken={farm.isToken}
+                    bscScanAddress={`https://bscscan.com/token/${farm.tokenAddresses[process.env.REACT_APP_CHAIN_ID]}`}
+                    totalValueFormatted={totalValueFormatted}
+                    tokenSymbol={farm.tokenSymbol}
+                    quoteTokenAdresses={quoteTokenAdresses}
+                    quoteTokenSymbol={quoteTokenSymbol}
+                    tokenAddresses={tokenAddresses}
+                />
+            </ExpandingWrapper>
+        </FCard>
+    )
 }
 
 export default FarmCard

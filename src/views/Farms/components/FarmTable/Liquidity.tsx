@@ -6,7 +6,7 @@ import useI18n from 'hooks/useI18n'
 import Tooltip from '../Tooltip/Tooltip'
 
 export interface LiquidityProps {
-  liquidity: number
+    liquidity: number
 }
 
 const LiquidityWrapper = styled.div`
@@ -35,21 +35,21 @@ const Container = styled.div`
 `
 
 const Liquidity: React.FunctionComponent<LiquidityProps> = ({ liquidity }) => {
-  const displayLiquidity = liquidity
-    ? `$${Number(liquidity).toLocaleString(undefined, { maximumFractionDigits: 0 })}`
-    : '-'
-  const TranslateString = useI18n()
+    const displayLiquidity = liquidity
+        ? `$${Number(liquidity).toLocaleString(undefined, { maximumFractionDigits: 0 })}`
+        : '-'
+    const TranslateString = useI18n()
 
-  return (
-    <Container>
-      <LiquidityWrapper>
-        <Text>{displayLiquidity}</Text>
-      </LiquidityWrapper>
-      <Tooltip content={TranslateString(999, 'The total value of the funds in this farm’s liquidity pool')}>
-        <HelpIcon color="textSubtle" />
-      </Tooltip>
-    </Container>
-  )
+    return (
+        <Container>
+            <LiquidityWrapper>
+                <Text>{displayLiquidity}</Text>
+            </LiquidityWrapper>
+            <Tooltip content={TranslateString(999, 'The total value of the funds in this farm’s liquidity pool')}>
+                <HelpIcon color="textSubtle" />
+            </Tooltip>
+        </Container>
+    )
 }
 
 export default Liquidity

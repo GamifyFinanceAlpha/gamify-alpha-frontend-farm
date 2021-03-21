@@ -3,6 +3,8 @@ import styled from 'styled-components'
 import { useTable, Button, ChevronUpIcon, ColumnType } from '@pancakeswap-libs/uikit'
 import useI18n from 'hooks/useI18n'
 
+import { useTotalValue } from 'state/hooks'
+
 import Row, { RowProps } from './Row'
 
 export interface ITableProps {

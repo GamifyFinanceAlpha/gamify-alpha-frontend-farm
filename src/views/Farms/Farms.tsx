@@ -9,7 +9,7 @@ import styled from 'styled-components'
 import { BLOCKS_PER_YEAR, CAKE_PER_BLOCK, CAKE_POOL_PID } from 'config'
 import FlexLayout from 'components/layout/Flex'
 import Page from 'components/layout/Page'
-import { useFarms, usePriceBnbBusd, usePriceCakeBusd } from 'state/hooks'
+import { useFarms, usePriceBnbBusd, usePriceCakeBusd, useTotalValue } from 'state/hooks'
 import useRefresh from 'hooks/useRefresh'
 import { fetchFarmUserDataAsync } from 'state/actions'
 import { QuoteToken } from 'config/constants/types'
@@ -20,7 +20,6 @@ import Table from './components/FarmTable/FarmTable'
 import { RowProps } from './components/FarmTable/Row'
 import FarmTabButtons from './components/FarmTabButtons'
 import { DesktopColumnSchema, ViewMode } from './components/types'
-import Divider from './components/Divider'
 
 export interface FarmsProps {
     tokenMode?: boolean
@@ -86,11 +85,7 @@ const Farms: React.FC<FarmsProps> = (farmsProps) => {
     // to retrieve assets prices against USD
     const farmsList = useCallback(
         (farmsToDisplay) => {
-            // const cakePriceVsBNB = new BigNumber(farmsLP.find((farm) => farm.pid === CAKE_POOL_PID)?.tokenPriceVsQuote || 0)
             const farmsToDisplayWithAPY: FarmWithStakedValue[] = farmsToDisplay.map((farm) => {
-                // if (!farm.tokenAmount || !farm.lpTotalInQuoteToken || !farm.lpTotalInQuoteToken) {
-                //   return farm
-                // }
                 const cakeRewardPerBlock = new BigNumber(farm.balloonPerBlock || 1).times(new BigNumber(farm.poolWeight)).div(new BigNumber(10).pow(18))
                 const cakeRewardPerYear = cakeRewardPerBlock.times(BLOCKS_PER_YEAR)
 
@@ -106,7 +101,7 @@ const Farms: React.FC<FarmsProps> = (farmsProps) => {
                     apy = apy.div(totalValue);
                 }
 
-                return { ...farm, apy }
+                return { ...farm, apy, liquidity: totalValue }
             })
             // if (query) {
             //     const lowercaseQuery = query.toLowerCase()
@@ -124,14 +119,14 @@ const Farms: React.FC<FarmsProps> = (farmsProps) => {
     )
 
     const isActive = !pathname.includes('history')
-    let farmsStaked = []
+    let farmList = []
     if (isActive) {
-        farmsStaked = stakedOnly ? farmsList(stakedOnlyFarms) : farmsList(activeFarms)
+        farmList = stakedOnly ? farmsList(stakedOnlyFarms) : farmsList(activeFarms)
     } else {
-        farmsStaked = farmsList(inactiveFarms)
+        farmList = farmsList(inactiveFarms)
     }
 
-    const rowData = farmsStaked.map((farm) => {
+    const rowData = farmList.map((farm) => {
         const { quoteTokenAdresses, quoteTokenSymbol, tokenAddresses } = farm
         const lpLabel = farm.tokenSymbol && farm.tokenSymbol.split(' ')[0].toUpperCase().replace('PANCAKE', '')
 
@@ -202,7 +197,7 @@ const Farms: React.FC<FarmsProps> = (farmsProps) => {
                 {/* <Divider /> */}
                 <FlexLayout>
                     <Route exact path={`${path}`}>
-                        {farmsStaked.map((farm) => (
+                        {farmList.map((farm) => (
                             <FarmCard
                                 key={farm.pid}
                                 farm={farm}
@@ -215,7 +210,7 @@ const Farms: React.FC<FarmsProps> = (farmsProps) => {
                         ))}
                     </Route>
                     <Route exact path={`${path}/history`}>
-                        {farmsStaked.map((farm) => (
+                        {farmList.map((farm) => (
                             <FarmCard
                                 key={farm.pid}
                                 farm={farm}

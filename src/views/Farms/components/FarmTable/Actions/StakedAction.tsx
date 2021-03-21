@@ -19,7 +19,7 @@ import useWeb3 from 'hooks/useWeb3'
 
 import DepositModal from '../../DepositModal'
 import WithdrawModal from '../../WithdrawModal'
-import { ActionContainer, ActionTitles, ActionContent, Earned, Title, Subtle } from './styles'
+import { ActionContainer, ActionTitles, ActionContent, Earned, Title, Subtle, Staked as StakedValue } from './styles'
 
 const IconButtonWrapper = styled.div`
   display: flex;
@@ -85,6 +85,7 @@ const Staked: React.FunctionComponent<FarmWithStakedValue> = ({ pid, tokenSymbol
                     <ActionContent>
                         <div>
                             <Earned>{displayBalance}</Earned>
+                            <StakedValue className="mt-2">~{0} USD</StakedValue>
                         </div>
                         <IconButtonWrapper>
                             <IconButton variant="secondary" onClick={onPresentWithdraw} mr="6px">
