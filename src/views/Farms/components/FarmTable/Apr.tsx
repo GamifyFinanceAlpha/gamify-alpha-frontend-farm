@@ -8,15 +8,15 @@ import getLiquidityUrlPathParts from 'utils/getLiquidityUrlPathParts'
 import useI18n from 'hooks/useI18n'
 
 export interface AprProps {
-  value: string
-  multiplier: string
-  lpLabel: string
-  quoteTokenAdresses: Address
-  quoteTokenSymbol: string
-  tokenAddresses: Address
-  cakePrice: BigNumber
-  originalValue: number
-  hideButton?: boolean
+    value: string
+    multiplier: string
+    lpLabel: string
+    quoteTokenAdresses: Address
+    quoteTokenSymbol: string
+    tokenAddresses: Address
+    cakePrice: BigNumber
+    originalValue: number
+    hideButton?: boolean
 }
 
 const Container = styled.div`
@@ -42,32 +42,39 @@ const AprWrapper = styled.div`
 `
 
 const Apr: React.FC<AprProps> = ({
-  value,
-  lpLabel,
-  quoteTokenAdresses,
-  quoteTokenSymbol,
-  tokenAddresses,
-  cakePrice,
-  originalValue,
-  hideButton = false,
+    value,
+    lpLabel,
+    quoteTokenAdresses,
+    quoteTokenSymbol,
+    tokenAddresses,
+    cakePrice,
+    originalValue,
+    hideButton = false,
 }) => {
-  const TranslateString = useI18n()
-  const liquidityUrlPathParts = getLiquidityUrlPathParts({ quoteTokenAdresses, quoteTokenSymbol, tokenAddresses })
-  const addLiquidityUrl = `${BASE_ADD_LIQUIDITY_URL}/${liquidityUrlPathParts}`
-  return (
-    <Container>
-      {originalValue ? (
-        <>
-          <AprWrapper>{value}%</AprWrapper>
-          {!hideButton && (
-            <ApyButton tokenSymbol={lpLabel} tokenAddresses={tokenAddresses} cakePrice={new BigNumber(cakePrice)} apy={new BigNumber(originalValue)} />
-          )}
-        </>
-      ) : (
-        <AprWrapper>{TranslateString(656, 'Loading...')}</AprWrapper>
-      )}
-    </Container>
-  )
+    const TranslateString = useI18n()
+    const liquidityUrlPathParts = getLiquidityUrlPathParts({ quoteTokenAdresses, quoteTokenSymbol, tokenAddresses })
+    const addLiquidityUrl = `${BASE_ADD_LIQUIDITY_URL}/${liquidityUrlPathParts}`
+    return (
+        <Container>
+            {originalValue ? (
+                <>
+                    <AprWrapper>{value}%</AprWrapper>
+                    {!hideButton && (
+                        <ApyButton
+                            tokenSymbol={lpLabel}
+                            quoteTokenAdresses={quoteTokenAdresses}
+                            quoteTokenSymbol={quoteTokenSymbol}
+                            tokenAddresses={tokenAddresses}
+                            cakePrice={new BigNumber(cakePrice)}
+                            apy={new BigNumber(originalValue)}
+                        />
+                    )}
+                </>
+            ) : (
+                <AprWrapper>{TranslateString(656, 'Loading...')}</AprWrapper>
+            )}
+        </Container>
+    )
 }
 
 export default Apr

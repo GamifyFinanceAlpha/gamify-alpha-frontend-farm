@@ -33,6 +33,21 @@ a:hover, a:focus {
     color: #fff;
 }
 
+/* Connect wallet button */
+@media (max-width: 862px) {
+    #connect-wallet {
+        display: none;
+    }
+}
+
+/* Dark BG for cards */
+
+.card-bg-dark {
+    background-color: #222 !important;
+}
+
+/* navbar */
+
 .navbar2 .container {
     padding-right: 15px;
     padding-left: 15px;
@@ -50,8 +65,6 @@ a:hover, a:focus {
     display: table;
     content: " ";
 }
-
-/* navbar */
 
 .container-fluid>.navbar-collapse2, .container-fluid>.navbar-header2, .container>.navbar-collapse2, .container>.navbar-header2 {
     margin-right: -15px;
@@ -74,6 +87,12 @@ a:hover, a:focus {
 
 .navbar-nav2 {
     margin: 7.5px -15px;
+}
+
+@media only screen and (max-width: 768px) {
+    .navbar-nav2>li>a>span {
+        display: none;
+    }
 }
 
 @media (min-width: 768px) {
@@ -102,6 +121,12 @@ a:hover, a:focus {
     width: 1.8em;
     height: auto;
     margin-top: -0.5em;
+}
+
+@media only screen and (max-width: 480px) {
+    .navbar-brand2 span {
+        display: none;
+    }
 }
 
 .navbar-default2 {
@@ -165,7 +190,7 @@ a:hover, a:focus {
     }
 }
 
-.navbar-nav2>li>a {
+.navbar-nav2>li>a, .navbar-nav2>li>b {
     padding: 0 2em;
     line-height: 6em;
 }

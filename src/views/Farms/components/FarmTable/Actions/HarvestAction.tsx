@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react'
-import { useWeb3React } from '@web3-react/core'
+import { useWallet } from '@binance-chain/bsc-use-wallet'
 import { Button } from '@pancakeswap-libs/uikit'
 import BigNumber from 'bignumber.js'
 import { FarmWithStakedValue } from 'views/Farms/components/FarmCard/FarmCard'
@@ -12,7 +12,7 @@ import { useCountUp } from 'react-countup'
 import { ActionContainer, ActionTitles, Title, Subtle, ActionContent, Earned, Staked } from './styles'
 
 const HarvestAction: React.FunctionComponent<FarmWithStakedValue> = ({ pid, userData }) => {
-  const { account } = useWeb3React()
+  const { account } = useWallet()
   const earningsBigNumber = userData && account ? new BigNumber(userData.earnings) : null
   const cakePrice = usePriceCakeBusd()
   let earnings = null
@@ -45,13 +45,13 @@ const HarvestAction: React.FunctionComponent<FarmWithStakedValue> = ({ pid, user
   return (
     <ActionContainer>
       <ActionTitles>
-        <Title>CAKE </Title>
+        <Title>BLN </Title>
         <Subtle>EARNED</Subtle>
       </ActionTitles>
       <ActionContent>
         <div>
           <Earned>{displayBalance}</Earned>
-          <Staked>~{countUp}USD</Staked>
+          <Staked className="mt-2">~{countUp} USD</Staked>
         </div>
         <Button
           disabled={!earnings || pendingTx || !account}

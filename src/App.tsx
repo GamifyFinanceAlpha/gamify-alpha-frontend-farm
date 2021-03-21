@@ -5,7 +5,7 @@ import BigNumber from 'bignumber.js'
 import { useFetchPublicData } from 'state/hooks'
 import GlobalStyle from './style/Global'
 import ResetCSS from './style/ResetCSS'
-import Menu from './components/Menu'
+// import Menu from './components/Menu'
 import Navigation from './components/Navigation'
 import PageLoader from './components/PageLoader'
 import 'bootstrap/dist/css/bootstrap.min.css';

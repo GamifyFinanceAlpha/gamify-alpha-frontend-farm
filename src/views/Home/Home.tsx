@@ -8,27 +8,6 @@ import CakeStats from './components/CakeStats'
 import TotalValueLockedCard from './components/TotalValueLockedCard'
 import TwitterCard from './components/TwitterCard'
 
-const Hero = styled.div`
-  align-items: center;
-  background-image: url('/images/egg/3.png');
-  background-repeat: no-repeat;
-  background-position: top center;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  margin: auto;
-  margin-bottom: 32px;
-  padding-top: 116px;
-  text-align: center;
-
-  ${({ theme }) => theme.mediaQueries.lg} {
-    background-image: url('/images/egg/3.png'), url('/images/egg/3b.png');
-    background-position: left center, right center;
-    height: 165px;
-    padding-top: 0;
-  }
-`
-
 const Cards = styled(BaseLayout)`
   align-items: stretch;
   justify-content: stretch;
@@ -53,26 +32,18 @@ const Cards = styled(BaseLayout)`
 `
 
 const Home: React.FC = () => {
-  const TranslateString = useI18n()
-
-  return (
-    <Page>
-      {/* <Hero>
-        <Heading as="h1" size="xl" mb="24px" color="secondary">
-          {TranslateString(576, 'Deflate Finance')}
-        </Heading>
-        <Text>{TranslateString(578, 'The only yield farm for Warriors on the journey to Valhalla on Binance Smart Chain.')}</Text>
-      </Hero> */}
-      <div>
-        <Cards>
-          <FarmStakingCard />
-          <TwitterCard/>
-          <CakeStats />
-          <TotalValueLockedCard />
-        </Cards>
-      </div>
-    </Page>
-  )
+    return (
+        <Page>
+            <div>
+                <Cards>
+                    <FarmStakingCard />
+                    <TwitterCard />
+                    <CakeStats />
+                    <TotalValueLockedCard />
+                </Cards>
+            </div>
+        </Page>
+    )
 }
 
 export default Home

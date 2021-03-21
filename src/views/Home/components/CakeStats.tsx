@@ -8,6 +8,7 @@ import useI18n from 'hooks/useI18n'
 import { getCakeAddress } from 'utils/addressHelpers'
 import Button from "@material-ui/core/Button";
 import Tooltip from "@material-ui/core/Tooltip";
+import { FaInfo } from "react-icons/fa";
 import CardValue from './CardValue'
 import { useFarms, usePriceCakeBusd } from '../../../state/hooks'
 
@@ -41,7 +42,7 @@ const CakeStats = () => {
   }
 
   return (
-    <StyledCakeStats>
+    <StyledCakeStats className="card-bg-dark">
       <CardBody>
         <Heading size="xl" mb="24px">
           {TranslateString(534, 'Balloon Stats')}
@@ -66,7 +67,7 @@ const CakeStats = () => {
               placement="top"
               style={{minWidth:0, padding:2}}
             >
-              <Button>🛈</Button>
+              <Button><FaInfo style={{color: "#ff6875"}}/></Button>
             </Tooltip>
           </Text>
           <CardValue fontSize="14px" value={getBalanceNumber(reflectedBalance)} decimals={0} />

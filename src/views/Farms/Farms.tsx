@@ -43,6 +43,7 @@ const Header = styled.div`
 const Farms: React.FC<FarmsProps> = (farmsProps) => {
     const { path } = useRouteMatch()
     const { pathname } = useLocation()
+    const pathParts = pathname.split('/')
     const TranslateString = useI18n()
     const farmsLP = useFarms()
     const cakePrice = usePriceCakeBusd()
@@ -66,6 +67,19 @@ const Farms: React.FC<FarmsProps> = (farmsProps) => {
     const stakedOnlyFarms = activeFarms.filter(
         (farm) => farm.userData && new BigNumber(farm.userData.stakedBalance).isGreaterThan(0),
     )
+
+    const pageTitle = pathParts[1].charAt(0).toUpperCase() + pathParts[1].slice(1)
+
+    const pageIntro = (page) => {
+        switch (page) {
+            case 'Tanks':
+                return 'Stake single tokens to earn BLN.';
+            case 'String':
+                return 'Automatically swap single tokens for Liquidity Pool (LP) tokens and stake them to earn BLN.';
+            default:
+                return 'Stake Liquidity Pool (LP) tokens to earn BLN.';
+        }
+    }
 
     // /!\ This function will be removed soon
     // This function compute the APY for each farm and will be replaced when we have a reliable API
@@ -185,7 +199,7 @@ const Farms: React.FC<FarmsProps> = (farmsProps) => {
 
         return (
             <div>
-                <Divider />
+                {/* <Divider /> */}
                 <FlexLayout>
                     <Route exact path={`${path}`}>
                         {farmsStaked.map((farm) => (
@@ -221,10 +235,10 @@ const Farms: React.FC<FarmsProps> = (farmsProps) => {
         <>
             <Header>
                 <Heading as="h1" size="xxl" color="secondary" mb="24px">
-                    {TranslateString(999, 'Farms')}
+                    {TranslateString(999, pageTitle)}
                 </Heading>
                 <Heading size="lg" color="text">
-                    {TranslateString(999, 'Stake Liquidity Pool (LP) tokens to earn.')}
+                    {TranslateString(999, pageIntro(pageTitle))}
                 </Heading>
             </Header>
             <Page>

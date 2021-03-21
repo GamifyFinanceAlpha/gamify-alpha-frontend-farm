@@ -6,7 +6,7 @@ export interface TooltipProps {
 }
 
 const TooltipContent = styled.div`
-  background: ;
+  background: #111;
   padding: 16px;
   border-radius: 16px;
   color: ;

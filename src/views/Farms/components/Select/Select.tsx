@@ -85,7 +85,7 @@ const ListItem = styled.li`
   list-style: none;
   padding: 8px 16px;
   &:hover {
-    background: ;
+    background: #111;
   }
 `
 

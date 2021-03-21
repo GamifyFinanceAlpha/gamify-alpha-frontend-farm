@@ -19,7 +19,7 @@ const TotalValueLockedCard = () => {
   // const tvl = totalValue.toFixed(2);
 
   return (
-    <StyledTotalValueLockedCard>
+    <StyledTotalValueLockedCard className="card-bg-dark">
       <CardBody>
         <Heading size="lg" mb="24px">
           {TranslateString(999, 'Total Value Locked (TVL)')}
