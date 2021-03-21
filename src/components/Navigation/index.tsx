@@ -21,8 +21,6 @@ const Navigation = (props) => {
 
     const { pathname } = useLocation()
 
-    console.log(cakePriceUsd)
-
     return (
         // <UikitMenu
         //   account={account}

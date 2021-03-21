@@ -54,11 +54,16 @@ const Apr: React.FC<AprProps> = ({
     const TranslateString = useI18n()
     const liquidityUrlPathParts = getLiquidityUrlPathParts({ quoteTokenAdresses, quoteTokenSymbol, tokenAddresses })
     const addLiquidityUrl = `${BASE_ADD_LIQUIDITY_URL}/${liquidityUrlPathParts}`
+    const farmAPY = value && new BigNumber(value).times(new BigNumber(100)).toNumber().toLocaleString(undefined, {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+    })
+
     return (
         <Container>
             {originalValue ? (
                 <>
-                    <AprWrapper>{value}%</AprWrapper>
+                    <AprWrapper>{farmAPY}%</AprWrapper>
                     {!hideButton && (
                         <ApyButton
                             tokenSymbol={lpLabel}
