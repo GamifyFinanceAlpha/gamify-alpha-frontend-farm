@@ -1,5 +1,7 @@
-import React, { useState, useCallback } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
+import { useCountUp } from 'react-countup'
 import styled from 'styled-components'
+import BigNumber from 'bignumber.js'
 import { Button, useModal, IconButton, AddIcon, MinusIcon } from '@pancakeswap-libs/uikit'
 import UnlockButton from 'components/UnlockButton'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
@@ -8,7 +10,6 @@ import { FarmWithStakedValue } from 'views/Farms/components/FarmCard/FarmCard'
 import useI18n from 'hooks/useI18n'
 import { useApprove } from 'hooks/useApprove'
 import bep20Abi from 'config/abi/erc20.json'
-// import { getBep20Contract } from 'utils/contractHelpers'
 import { getContract } from 'utils/web3'
 import { BASE_ADD_LIQUIDITY_URL } from 'config'
 import getLiquidityUrlPathParts from 'utils/getLiquidityUrlPathParts'
@@ -16,7 +17,7 @@ import { getBalanceNumber } from 'utils/formatBalance'
 import useStake from 'hooks/useStake'
 import useUnstake from 'hooks/useUnstake'
 import useWeb3 from 'hooks/useWeb3'
-
+import { Farm } from 'state/types'
 import DepositModal from '../../DepositModal'
 import WithdrawModal from '../../WithdrawModal'
 import { ActionContainer, ActionTitles, ActionContent, Earned, Title, Subtle, Staked as StakedValue } from './styles'
@@ -24,8 +25,24 @@ import { ActionContainer, ActionTitles, ActionContent, Earned, Title, Subtle, St
 const IconButtonWrapper = styled.div`
   display: flex;
 `
+export interface StakedActionProps extends Farm {
+    apy?: BigNumber,
+    liquidity?: BigNumber,
+    totalValue?: BigNumber
+}
 
-const Staked: React.FunctionComponent<FarmWithStakedValue> = ({ pid, tokenSymbol, lpAddresses, quoteTokenAdresses, quoteTokenSymbol, tokenAddresses }) => {
+const Staked: React.FunctionComponent<StakedActionProps> = ({
+    pid,
+    isToken,
+    tokenAmount,
+    lpTokenBalanceMC,
+    totalValue,
+    tokenSymbol,
+    lpAddresses,
+    quoteTokenAdresses,
+    quoteTokenSymbol,
+    tokenAddresses
+}) => {
     const TranslateString = useI18n()
     const { account } = useWallet()
     const [requestedApproval, setRequestedApproval] = useState(false)
@@ -41,6 +58,7 @@ const Staked: React.FunctionComponent<FarmWithStakedValue> = ({ pid, tokenSymbol
     const addLiquidityUrl = `${BASE_ADD_LIQUIDITY_URL}/${liquidityUrlPathParts}`
     const rawStakedBalance = getBalanceNumber(stakedBalance)
     const displayBalance = rawStakedBalance.toLocaleString()
+    const stakedAmount = isToken ? tokenAmount : lpTokenBalanceMC
 
     const [onPresentDeposit] = useModal(
         <DepositModal max={tokenBalance} onConfirm={onStake} tokenName={tokenSymbol} />,
@@ -60,6 +78,22 @@ const Staked: React.FunctionComponent<FarmWithStakedValue> = ({ pid, tokenSymbol
             console.error(e)
         }
     }, [onApprove])
+
+    let myValue = 0
+    myValue = isApproved && stakedBalance.shiftedBy(-18).div(new BigNumber(stakedAmount)).times(totalValue).toNumber();
+
+    const { countUp, update } = useCountUp({
+        start: 0,
+        end: myValue,
+        duration: 1,
+        separator: ',',
+        decimals: 2,
+    })
+    const updateValue = useRef(update)
+
+    useEffect(() => {
+        updateValue.current(myValue)
+    }, [myValue, updateValue])
 
     if (!account) {
         return (
@@ -85,7 +119,7 @@ const Staked: React.FunctionComponent<FarmWithStakedValue> = ({ pid, tokenSymbol
                     <ActionContent>
                         <div>
                             <Earned>{displayBalance}</Earned>
-                            <StakedValue className="mt-2">~{0} USD</StakedValue>
+                            <StakedValue className="mt-2">~{countUp} USD</StakedValue>
                         </div>
                         <IconButtonWrapper>
                             <IconButton variant="secondary" onClick={onPresentWithdraw} mr="6px">

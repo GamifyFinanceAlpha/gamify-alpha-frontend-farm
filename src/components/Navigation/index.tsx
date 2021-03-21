@@ -6,42 +6,29 @@ import { LanguageContext } from 'contexts/Localisation/languageContext'
 import useTheme from 'hooks/useTheme'
 import { usePriceCakeBusd } from 'state/hooks'
 import { Menu as UikitMenu } from '@pancakeswap-libs/uikit'
-// import config from './config'
+import BigNumber from 'bignumber.js'
 import ConnectWallet from 'components/ConnectWallet'
 import { Button } from 'react-bootstrap';
-import { FaTelegramPlane, FaTwitter, FaTractor } from "react-icons/fa";
+import { FaTelegramPlane, FaTwitter, FaTractor, FaInfoCircle } from "react-icons/fa";
 import { GiChemicalTank, GiSewingString } from "react-icons/gi";
 
 
-const Navigation = (props) => {
+const Navigation = () => {
     const { account, connect, reset } = useWallet()
-    //   const { selectedLanguage, setSelectedLanguage } = useContext(LanguageContext)
-    const { isDark, toggleTheme } = useTheme()
     const cakePriceUsd = usePriceCakeBusd()
-
     const { pathname } = useLocation()
 
     return (
-        // <UikitMenu
-        //   account={account}
-        //   login={connect}
-        //   logout={reset}
-        //   isDark={isDark}
-        //   toggleTheme={toggleTheme}
-        //   currentLang={selectedLanguage && selectedLanguage.code}
-        //   langs={allLanguages}
-        //   setLang={setSelectedLanguage}
-        //   cakePriceUsd={cakePriceUsd.toNumber()}
-        //   links={config}
-        //   priceLink="https://bscscan.com/token/0x896eDE222D3f7f3414e136a2791BDB08AAa25Ce0"
-        //   {...props}
-        // />
         <nav className="navbar2 navbar-default2 navbar-static-top2">
             <div className="container-fluid position-relative">
                 <div className="navbar-header2">
                     <a className={pathname === '/' ? "navbar-brand2 text-white" : "navbar-brand2"} href="/">
                         <img className="mb-n2" alt="logo" src="/images/logo2.png" />
-                        <span>Deflate Finance</span>
+                        <span className="ml-1">Deflate Finance 
+                            {/* <b className="position-absolute" style={{ fontSize: "18px" }}>
+                                ${`${cakePriceUsd.toNumber().toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2, })}`}
+                            </b> */}
+                        </span>
                     </a>
                 </div>
                 <div id="navbar">
@@ -69,6 +56,9 @@ const Navigation = (props) => {
                         </li>
                         <li className={pathname === '/string' ? "active" : ""}>
                             <a href="/string"><GiSewingString className="mr-1" /> <span>String 🔥</span></a>
+                        </li>
+                        <li className={pathname === '/string' ? "active" : ""}>
+                            <a href="/"><FaInfoCircle className="mr-1" /> <span>About</span></a>
                         </li>
                     </ul>
                 </div>

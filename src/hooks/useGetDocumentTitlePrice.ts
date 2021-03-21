@@ -5,8 +5,8 @@ const useGetDocumentTitlePrice = () => {
   const blnPriceUsd = usePriceCakeBusd()
   useEffect(() => {
     document.title = `Deflate Finance - $${Number(blnPriceUsd).toLocaleString(undefined, {
-      minimumFractionDigits: 3,
-      maximumFractionDigits: 3,
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
     })}`
   })
 }

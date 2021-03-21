@@ -46,7 +46,7 @@ const Liquidity: React.FunctionComponent<LiquidityProps> = ({ liquidity }) => {
                 <Text>{displayLiquidity}</Text>
             </LiquidityWrapper>
             <Tooltip content={TranslateString(999, 'The total value of the funds in this farm’s liquidity pool')}>
-                <HelpIcon color="textSubtle" />
+                <HelpIcon color="primary" />
             </Tooltip>
         </Container>
     )

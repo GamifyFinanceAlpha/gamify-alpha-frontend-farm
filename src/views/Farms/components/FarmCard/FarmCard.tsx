@@ -170,9 +170,13 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm, removed, cakePrice, bnbPrice,
             />
             <ExpandingWrapper expanded={showExpandableSection}>
                 <DetailsSection
+                    pid={farm.pid}
                     removed={removed}
                     isToken={farm.isToken}
+                    tokenAmount={farm.tokenAmount}
+                    lpTokenBalanceMC={farm.lpTokenBalanceMC}
                     bscScanAddress={`https://bscscan.com/token/${farm.tokenAddresses[process.env.REACT_APP_CHAIN_ID]}`}
+                    totalValue={totalValue}
                     totalValueFormatted={totalValueFormatted}
                     tokenSymbol={farm.tokenSymbol}
                     quoteTokenAdresses={quoteTokenAdresses}

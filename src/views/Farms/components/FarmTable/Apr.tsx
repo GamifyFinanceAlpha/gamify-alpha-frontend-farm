@@ -30,7 +30,7 @@ const Container = styled.div`
 
     svg {
       path {
-        fill: ${({ theme }) => theme.colors.textSubtle};
+        fill: ${({ theme }) => theme.colors.primary};
       }
     }
   }

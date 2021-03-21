@@ -54,7 +54,7 @@ const Multiplier: React.FunctionComponent<MultiplierProps> = ({ multiplier }) =>
           </div>
         }
       >
-        <HelpIcon color="textSubtle" />
+        <HelpIcon color="primary" />
       </Tooltip>
     </Container>
   )

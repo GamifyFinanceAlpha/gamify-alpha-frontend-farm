@@ -1,4 +1,5 @@
 import React from 'react'
+import BigNumber from 'bignumber.js'
 import styled from 'styled-components'
 import useI18n from 'hooks/useI18n'
 import { LinkExternal, Text } from '@pancakeswap-libs/uikit'
@@ -14,14 +15,15 @@ import Multiplier, { MultiplierProps } from '../Multiplier'
 import Liquidity, { LiquidityProps } from '../Liquidity'
 
 export interface ActionPanelProps {
-  apr: AprProps
-  multiplier: MultiplierProps
-  liquidity: LiquidityProps
-  details: FarmWithStakedValue
+    apr: AprProps
+    multiplier: MultiplierProps
+    liquidity: LiquidityProps
+    details: FarmWithStakedValue,
+    totalValue: BigNumber
 }
 
 const Container = styled.div`
-  background: ${({ theme }) => theme.colors.background};
+  background: #333;
   display: flex;
   width: 100%;
   flex-direction: column-reverse;
@@ -100,57 +102,58 @@ const ValueWrapper = styled.div`
   margin: 4px 0px;
 `
 
-const ActionPanel: React.FunctionComponent<ActionPanelProps> = ({ details, apr, multiplier, liquidity }) => {
-  const farm = details
+const ActionPanel: React.FunctionComponent<ActionPanelProps> = ({ totalValue, details, apr, multiplier, liquidity }) => {
+    const farm = details
 
-  const TranslateString = useI18n()
-  const { quoteTokenAdresses, quoteTokenSymbol, tokenAddresses } = farm
-  const lpLabel = farm.tokenSymbol && farm.tokenSymbol.toUpperCase().replace('PANCAKE', '')
-  const liquidityUrlPathParts = getLiquidityUrlPathParts({
-    quoteTokenAdresses,
-    quoteTokenSymbol,
-    tokenAddresses,
-  })
-  const lpAddress = farm.lpAddresses[process.env.REACT_APP_CHAIN_ID]
-  const bsc = `https://bscscan.com/address/${lpAddress}`
-  const info = `https://pancakeswap.info/pair/${lpAddress}`
-  const isCommunityFarm = false
+    const TranslateString = useI18n()
+    const { quoteTokenAdresses, quoteTokenSymbol, tokenAddresses } = farm
+    const lpLabel = farm.tokenSymbol && farm.tokenSymbol.toUpperCase().replace('PANCAKE', '')
+    const liquidityUrlPathParts = getLiquidityUrlPathParts({
+        quoteTokenAdresses,
+        quoteTokenSymbol,
+        tokenAddresses,
+    })
+    const lpAddress = farm.lpAddresses[process.env.REACT_APP_CHAIN_ID]
+    const bsc = `https://bscscan.com/address/${lpAddress}`
+    const info = `https://pancakeswap.info/pair/${lpAddress}`
+    const isCommunityFarm = false
 
-  return (
-    <Container>
-      <InfoContainer>
-        <StakeContainer>
-          <StyledLinkExternal href={`https://exchange.pancakeswap.finance/#/add/${liquidityUrlPathParts}`}>
-            {TranslateString(999, `Get ${lpLabel}`,)}
-          </StyledLinkExternal>
-        </StakeContainer>
-        <StyledLinkExternal href={bsc}>{TranslateString(999, 'View Contract')}</StyledLinkExternal>
-        <StyledLinkExternal href={info}>{TranslateString(999, 'See Pair Info')}</StyledLinkExternal>
-        <TagsContainer>
-          {isCommunityFarm ? <CommunityTag /> : <CoreTag />}
-          {/* {dual ? <DualTag /> : null} */}
-        </TagsContainer>
-      </InfoContainer>
-      <ValueContainer>
-        <ValueWrapper>
-          <Text>{TranslateString(736, 'APR')}</Text>
-          <Apr {...apr} />
-        </ValueWrapper>
-        <ValueWrapper>
-          <Text>{TranslateString(999, 'Multiplier')}</Text>
-          <Multiplier {...multiplier} />
-        </ValueWrapper>
-        <ValueWrapper>
-          <Text>{TranslateString(999, 'Liquidity')}</Text>
-          <Liquidity {...liquidity} />
-        </ValueWrapper>
-      </ValueContainer>
-      <ActionContainer>
-        <HarvestAction {...farm} />
-        <StakedAction {...farm} />
-      </ActionContainer>
-    </Container>
-  )
+    return (
+        <Container>
+            <InfoContainer>
+                <StakeContainer>
+                    <StyledLinkExternal href={`https://exchange.pancakeswap.finance/#/add/${liquidityUrlPathParts}`}>
+                        {TranslateString(999, `Get ${lpLabel}`,)}
+                    </StyledLinkExternal>
+                </StakeContainer>
+                <StyledLinkExternal href={bsc}>{TranslateString(999, 'View Contract')}</StyledLinkExternal>
+                <StyledLinkExternal href={info}>{TranslateString(999, 'See Pair Info')}</StyledLinkExternal>
+                <TagsContainer>
+                    {isCommunityFarm ? <CommunityTag /> : <CoreTag />}
+                </TagsContainer>
+            </InfoContainer>
+            <ValueContainer>
+                <ValueWrapper>
+                    <Text>{TranslateString(736, 'APR')}</Text>
+                    <Apr {...apr} />
+                </ValueWrapper>
+                <ValueWrapper>
+                    <Text>{TranslateString(999, 'Multiplier')}</Text>
+                    <Multiplier {...multiplier} />
+                </ValueWrapper>
+                <ValueWrapper>
+                    <Text>{TranslateString(999, 'Liquidity')}</Text>
+                    <Liquidity {...liquidity} />
+                </ValueWrapper>
+            </ValueContainer>
+            <ActionContainer>
+                <HarvestAction {...farm} />
+                <StakedAction
+                    totalValue={totalValue}
+                    {...farm} />
+            </ActionContainer>
+        </Container>
+    )
 }
 
 export default ActionPanel

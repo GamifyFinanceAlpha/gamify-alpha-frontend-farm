@@ -2,14 +2,18 @@ import React, { useEffect, useCallback, useState } from 'react'
 import { Route, useRouteMatch, useLocation } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import BigNumber from 'bignumber.js'
+import { Button } from 'react-bootstrap'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
 import { provider } from 'web3-core'
-import { Image, Heading, RowType } from '@pancakeswap-libs/uikit'
+import { Heading, RowType } from '@pancakeswap-libs/uikit'
 import styled from 'styled-components'
-import { BLOCKS_PER_YEAR, CAKE_PER_BLOCK, CAKE_POOL_PID } from 'config'
+import { TiFlash } from "react-icons/ti";
+import { MdSwapHoriz } from "react-icons/md";
+import { BsArrowClockwise } from "react-icons/bs";
+import { BLOCKS_PER_YEAR } from 'config'
 import FlexLayout from 'components/layout/Flex'
 import Page from 'components/layout/Page'
-import { useFarms, usePriceBnbBusd, usePriceCakeBusd, useTotalValue } from 'state/hooks'
+import { useFarms, usePriceBnbBusd, usePriceCakeBusd } from 'state/hooks'
 import useRefresh from 'hooks/useRefresh'
 import { fetchFarmUserDataAsync } from 'state/actions'
 import { QuoteToken } from 'config/constants/types'
@@ -19,7 +23,7 @@ import FarmCard, { FarmWithStakedValue } from './components/FarmCard/FarmCard'
 import Table from './components/FarmTable/FarmTable'
 import { RowProps } from './components/FarmTable/Row'
 import FarmTabButtons from './components/FarmTabButtons'
-import { DesktopColumnSchema, ViewMode } from './components/types'
+import { DesktopColumnSchema } from './components/types'
 
 export interface FarmsProps {
     tokenMode?: boolean
@@ -77,6 +81,40 @@ const Farms: React.FC<FarmsProps> = (farmsProps) => {
                 return 'Automatically swap single tokens for Liquidity Pool (LP) tokens and stake them to earn BLN.';
             default:
                 return 'Stake Liquidity Pool (LP) tokens to earn BLN.';
+        }
+    }
+
+    const renderPerks = (page) => {
+        switch (page) {
+            case 'Tanks':
+                return (
+                    <>
+                        <Button disabled variant="outline-info" className="rounded-pill mb-3 mr-2" style={{ fontSize: "12px", opacity: 1 }}>
+                            <b>Single token</b>
+                        </Button>
+                        <Button disabled variant="outline-danger" className="rounded-pill mb-3" style={{ fontSize: "12px", opacity: 1 }}>
+                            <b><BsArrowClockwise />Compound</b>
+                        </Button>
+                    </>
+                )
+            case 'String':
+                return (
+                    <div className="mt-2">
+                        <Button disabled variant="outline-warning" className="rounded-pill mb-3 mr-2" style={{ fontSize: "12px", opacity: 1 }}>
+                            <b><MdSwapHoriz />Auto swap</b>
+                        </Button>
+                        <Button disabled variant="outline-warning" className="rounded-pill mb-3" style={{ fontSize: "12px", opacity: 1 }}>
+                            <b><TiFlash />Auto compound</b>
+                        </Button>
+                    </div>
+                )
+            default:
+                return (
+                    <Button disabled variant="outline-success" className="rounded-pill mb-3" style={{ fontSize: "12px", opacity: 1 }}>
+                        <b>Double token</b>
+                    </Button>
+                )
+
         }
     }
 
@@ -165,7 +203,6 @@ const Farms: React.FC<FarmsProps> = (farmsProps) => {
     const renderContent = (): JSX.Element => {
         if (rowData.length) {
             const columnSchema = DesktopColumnSchema
-
             const columns = columnSchema.map((column) => ({
                 id: column.id,
                 name: column.name,
@@ -194,7 +231,6 @@ const Farms: React.FC<FarmsProps> = (farmsProps) => {
 
         return (
             <div>
-                {/* <Divider /> */}
                 <FlexLayout>
                     <Route exact path={`${path}`}>
                         {farmList.map((farm) => (
@@ -232,6 +268,7 @@ const Farms: React.FC<FarmsProps> = (farmsProps) => {
                 <Heading as="h1" size="xxl" color="secondary" mb="24px">
                     {TranslateString(999, pageTitle)}
                 </Heading>
+                {/* {renderPerks(pageTitle)} */}
                 <Heading size="lg" color="text">
                     {TranslateString(999, pageIntro(pageTitle))}
                 </Heading>
