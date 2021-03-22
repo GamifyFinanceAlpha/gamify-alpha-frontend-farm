@@ -230,7 +230,7 @@ a:hover, a:focus {
     color: #c3c3c3;
 }
 
-.navbar-default2 .navbar-nav2>li.active {
+.navbar-default2 .navbar-nav2 li.active {
     color: #fff;
 }
 
