@@ -8,8 +8,8 @@ import Navigation from './components/Navigation'
 import PageLoader from './components/PageLoader'
 import GlobalStyle from './style/Global'
 import ResetCSS from './style/ResetCSS'
-import 'style/style.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'style/style.css'
 
 // Route-based code splitting
 // Only pool is included in the main bundle because of it's the most visited page'

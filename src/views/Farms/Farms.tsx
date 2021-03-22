@@ -23,7 +23,6 @@ import FarmCard, { FarmWithStakedValue } from './components/FarmCard/FarmCard'
 import ToggleView from './components/ToggleView/ToggleView'
 import Table from './components/FarmTable/FarmTable'
 import { RowProps } from './components/FarmTable/Row'
-import FarmTabButtons from './components/FarmTabButtons'
 import { DesktopColumnSchema, ViewMode } from './components/types'
 import Select, { OptionProps } from './components/Select/Select'
 
@@ -210,6 +209,7 @@ const Farms: React.FC<FarmsProps> = (farmsProps) => {
 
                 return { ...farm, apy, liquidity: totalValue }
             })
+            // Search query to be added later
             // if (query) {
             //     const lowercaseQuery = query.toLowerCase()
             //     farmsToDisplayWithAPY = farmsToDisplayWithAPY.filter((farm: FarmWithStakedValue) => {
@@ -333,7 +333,7 @@ const Farms: React.FC<FarmsProps> = (farmsProps) => {
 
     const handleSortOptionChange = (option: OptionProps): void => {
         setSortOption(option.value)
-      }
+    }
 
     return (
         <>
@@ -347,7 +347,6 @@ const Farms: React.FC<FarmsProps> = (farmsProps) => {
                 </Heading>
             </Header>
             <Page>
-                {/* <FarmTabButtons stakedOnly={stakedOnly} setStakedOnly={setStakedOnly} /> */}
                 <ControlContainer>
                     <ViewControls>
                         <ToggleView viewMode={viewMode} onToggle={(mode: ViewMode) => setViewMode(mode)} />
@@ -355,7 +354,6 @@ const Farms: React.FC<FarmsProps> = (farmsProps) => {
                             <Toggle checked={stakedOnly} onChange={() => setStakedOnly(!stakedOnly)} />
                             <Text> {TranslateString(1116, 'Staked only')}</Text>
                         </ToggleWrapper>
-                        {/* <FarmTabButtons /> */}
                     </ViewControls>
                     <FilterContainer>
                         <LabelWrapper>
