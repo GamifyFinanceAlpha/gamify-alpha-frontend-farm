@@ -230,18 +230,14 @@ a:hover, a:focus {
     color: #c3c3c3;
 }
 
-.navbar-default2 .navbar-nav2 li.active {
-    color: #fff;
-}
-
 .navbar-default2 .navbar-nav2>li>a:hover, .navbar-default2 .navbar-nav2>li>a:focus {
     color: #fff;
 }
 
 .navbar-default2 .navbar-nav2>.active>a, .navbar-default2 .navbar-nav2>.active>a:hover, .navbar-default2 .navbar-nav2>.active>a:focus {
-    color: #c3c3c3;
+    color: #fff;
     background-color: #111;
-    border-bottom: 1px solid #666;
+    border-bottom: 1px solid #fff;
 }
 
 .navbar-default2 .navbar-nav2>.open>a, .navbar-default2 .navbar-nav2>.open>a:hover, .navbar-default2 .navbar-nav2>.open>a:focus {
