@@ -4,13 +4,12 @@ import { useWallet } from '@binance-chain/bsc-use-wallet'
 import BigNumber from 'bignumber.js'
 import { useFetchPublicData } from 'state/hooks'
 import useGetDocumentTitlePrice from 'hooks/useGetDocumentTitlePrice'
-import GlobalStyle from './style/Global'
-import ResetCSS from './style/ResetCSS'
-// import Menu from './components/Menu'
 import Navigation from './components/Navigation'
 import PageLoader from './components/PageLoader'
+import GlobalStyle from './style/Global'
+import ResetCSS from './style/ResetCSS'
+import 'style/style.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import 'style3.css'
 
 // Route-based code splitting
 // Only pool is included in the main bundle because of it's the most visited page'
@@ -22,46 +21,45 @@ const NotFound = lazy(() => import('./views/NotFound'))
 
 // This config is required for number formating
 BigNumber.config({
-  EXPONENTIAL_AT: 1000,
-  DECIMAL_PLACES: 80,
+    EXPONENTIAL_AT: 1000,
+    DECIMAL_PLACES: 80,
 })
 
 const App: React.FC = () => {
-  const { account, connect } = useWallet()
-  useEffect(() => {
-    if (!account && window.localStorage.getItem('accountStatus')) {
-      connect('injected')
-    }
-  }, [account, connect])
+    const { account, connect } = useWallet()
+    useEffect(() => {
+        if (!account && window.localStorage.getItem('accountStatus')) {
+            connect('injected')
+        }
+    }, [account, connect])
 
-  useFetchPublicData()
-  useGetDocumentTitlePrice()
+    useFetchPublicData()
+    useGetDocumentTitlePrice()
 
-  return (
-    <Router>
-      <ResetCSS />
-      <link href="https://fonts.googleapis.com/css?family=Open+Sans|Quicksand" rel="stylesheet"/>
-      <GlobalStyle />
-      <Navigation />
-        <Suspense fallback={<PageLoader />}>
-          <Switch>
-            <Route path="/" exact>
-              <Home />
-            </Route>
-            <Route path="/farms">
-              <Farms />
-            </Route>
-            <Route path="/tanks">
-              <Farms tokenMode/>
-            </Route>
-            <Route path="/string">
-              <Farms />
-            </Route>
-            <Route component={NotFound} />
-          </Switch>
-        </Suspense>
-    </Router>
-  )
+    return (
+        <Router>
+            <ResetCSS />
+            <GlobalStyle />
+            <Navigation />
+            <Suspense fallback={<PageLoader />}>
+                <Switch>
+                    <Route path="/" exact>
+                        <Home />
+                    </Route>
+                    <Route path="/farms">
+                        <Farms />
+                    </Route>
+                    <Route path="/tanks">
+                        <Farms tokenMode />
+                    </Route>
+                    <Route path="/string">
+                        <Farms />
+                    </Route>
+                    <Route component={NotFound} />
+                </Switch>
+            </Suspense>
+        </Router>
+    )
 }
 
 export default React.memo(App)

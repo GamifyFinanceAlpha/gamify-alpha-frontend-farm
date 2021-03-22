@@ -1,14 +1,10 @@
 import React, { useContext } from 'react'
-import { Route, useRouteMatch, useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
 import { allLanguages } from 'config/localisation/languageCodes'
 import { LanguageContext } from 'contexts/Localisation/languageContext'
-import useTheme from 'hooks/useTheme'
 import { usePriceCakeBusd } from 'state/hooks'
-import { Menu as UikitMenu } from '@pancakeswap-libs/uikit'
-import BigNumber from 'bignumber.js'
 import ConnectWallet from 'components/ConnectWallet'
-import { Button } from 'react-bootstrap';
 import { FaTelegramPlane, FaTwitter, FaTractor, FaInfoCircle } from "react-icons/fa";
 import { GiChemicalTank, GiSewingString } from "react-icons/gi";
 
@@ -57,9 +53,9 @@ const Navigation = () => {
                         <li className={pathname === '/string' ? "active" : ""}>
                             <a href="/string"><GiSewingString className="mr-1" /> <span>String 🔥</span></a>
                         </li>
-                        <li className={pathname === '/string' ? "active" : ""}>
+                        {/* <li className={pathname === '/string' ? "active" : ""}>
                             <a href="/"><FaInfoCircle className="mr-1" /> <span>About</span></a>
-                        </li>
+                        </li> */}
                     </ul>
                 </div>
             </div>

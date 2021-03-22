@@ -1,19 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
 body, html {
-    font: normal 16px/1.6 'Open Sans', helvetica, arial, sans-serif;
     background-color: #191919;
     color: #8e8e8e;
     border: 0;
     padding: 0;
     border: 0;
-}
-
-h1, h2, h3 {
-    font-family: 'Quicksand', helvetica, arial, sans-serif;
-    font-weight: normal;
-}
-
-h2 {
-    margin: 1em 0;
 }
 
 p {
@@ -34,6 +25,7 @@ a:hover, a:focus {
 }
 
 /* Connect wallet button */
+
 @media (max-width: 862px) {
     #connect-wallet {
         display: none;
@@ -102,7 +94,6 @@ a:hover, a:focus {
 }
 
 .navbar2 {
-    font: normal 1em 'Quicksand', helvetica, arial, sans-serif;
     overflow: visible;
     margin-bottom: 0;
     border: 1px solid transparent;
@@ -405,7 +396,6 @@ a:hover, a:focus {
     position: relative;
     margin-top: 4em;
     margin-bottom: 3em;
-    font: normal 1em 'Quicksand', helvetica, arial, sans-serif;
 }
 
 #main_wrapper .randomize {
@@ -738,7 +728,6 @@ i {
     background: transparent;
     border: 1px solid #999;
     color: #fff;
-    font-family: 'Quicksand', helvetica, arial, verdana, sans-serif;
     font-size: 1em;
     padding: 0.2em 10px;
     width: 95px;
