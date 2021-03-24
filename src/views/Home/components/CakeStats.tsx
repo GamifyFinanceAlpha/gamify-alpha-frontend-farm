@@ -42,7 +42,7 @@ const CakeStats = () => {
   }
 
   return (
-    <StyledCakeStats className="card-bg-dark">
+    <StyledCakeStats>
       <CardBody>
         <Heading size="xl" mb="24px">
           {TranslateString(534, 'Balloon Stats')}

@@ -66,7 +66,7 @@ const FarmedStakingCard = () => {
   }, [onReward])
 
   return (
-    <StyledFarmStakingCard className="card-bg-dark">
+    <StyledFarmStakingCard>
       <CardBody>
         <Heading size="xl" mb="24px">
           {TranslateString(542, 'Farms & Staking')}
@@ -88,14 +88,14 @@ const FarmedStakingCard = () => {
               id="harvest-all"
               disabled={balancesWithValue.length <= 0 || pendingTx}
               onClick={harvestAllFarms}
-              fullWidth
+              className="w-100"
             >
               {pendingTx
                 ? TranslateString(548, 'Collecting BLN')
                 : TranslateString(999, `Harvest all (${balancesWithValue.length})`)}
             </Button>
           ) : (
-            <UnlockButton fullWidth />
+            <UnlockButton className="w-100" />
           )}
         </Actions>
       </CardBody>

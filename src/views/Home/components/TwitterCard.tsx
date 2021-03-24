@@ -27,7 +27,7 @@ const TwitterCard = () => {
   const TranslateString = useI18n()
 
   return (
-    <StyledTwitterCard className="card-bg-dark">
+    <StyledTwitterCard>
       <CardBody>
         <Heading size="xl" mb="24px">
           {TranslateString(10003, 'Announcements')}

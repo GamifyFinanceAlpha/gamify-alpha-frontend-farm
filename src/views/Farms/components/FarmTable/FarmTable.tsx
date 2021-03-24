@@ -14,10 +14,11 @@ export interface ITableProps {
 }
 
 const Container = styled.div`
-  width: 100%;
-  background: #222222;
-  border-radius: 16px;
-  margin: 16px 0px;
+    filter: ${({ theme }) => theme.card.dropShadow};
+    width: 100%;
+    background: ${({ theme }) => theme.card.background};
+    border-radius: 16px;
+    margin: 16px 0px;
 `
 
 const TableWrapper = styled.div`

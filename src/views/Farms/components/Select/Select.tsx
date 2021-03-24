@@ -47,8 +47,8 @@ const DropDownContainer = styled.div<{ isOpen: boolean; width: number; height: n
   }
 
   ${(props) =>
-    props.isOpen &&
-    css`
+        props.isOpen &&
+        css`
       ${DropDownHeader} {
         border-bottom: 1px solid ;
         box-shadow: ;
@@ -85,66 +85,66 @@ const ListItem = styled.li`
   list-style: none;
   padding: 8px 16px;
   &:hover {
-    background: #111;
+    background: ${({ theme }) => theme.colors.inputSecondary};
   }
 `
 
 export interface SelectProps {
-  options: OptionProps[]
-  onChange?: (option: OptionProps) => void
+    options: OptionProps[]
+    onChange?: (option: OptionProps) => void
 }
 
 export interface OptionProps {
-  label: string
-  value: any
+    label: string
+    value: any
 }
 
 const Select: React.FunctionComponent<SelectProps> = ({ options, onChange }) => {
-  const containerRef = useRef(null)
-  const dropdownRef = useRef(null)
-  const [isOpen, setIsOpen] = useState(false)
-  const [selectedOption, setSelectedOption] = useState(options[0])
-  const [containerSize, setContainerSize] = useState({ width: 0, height: 0 })
+    const containerRef = useRef(null)
+    const dropdownRef = useRef(null)
+    const [isOpen, setIsOpen] = useState(false)
+    const [selectedOption, setSelectedOption] = useState(options[0])
+    const [containerSize, setContainerSize] = useState({ width: 0, height: 0 })
 
-  const toggling = () => setIsOpen(!isOpen)
+    const toggling = () => setIsOpen(!isOpen)
 
-  const onOptionClicked = (option: OptionProps) => () => {
-    setSelectedOption(option)
-    setIsOpen(false)
+    const onOptionClicked = (option: OptionProps) => () => {
+        setSelectedOption(option)
+        setIsOpen(false)
 
-    if (onChange) {
-      onChange(option)
+        if (onChange) {
+            onChange(option)
+        }
     }
-  }
 
-  useEffect(() => {
-    setContainerSize({
-      width: dropdownRef.current.offsetWidth, // Consider border
-      height: dropdownRef.current.offsetHeight,
-    })
-  }, [])
+    useEffect(() => {
+        setContainerSize({
+            width: dropdownRef.current.offsetWidth, // Consider border
+            height: dropdownRef.current.offsetHeight,
+        })
+    }, [])
 
-  return (
-    <DropDownContainer isOpen={isOpen} ref={containerRef} {...containerSize}>
-      {containerSize.width !== 0 && (
-        <DropDownHeader onClick={toggling}>
-          <Text>{selectedOption.label}</Text>
-        </DropDownHeader>
-      )}
-      <ArrowDropDownIcon color="text" onClick={toggling} />
-      <DropDownListContainer>
-        <DropDownList ref={dropdownRef}>
-          {options.map((option) =>
-            option.label !== selectedOption.label ? (
-              <ListItem onClick={onOptionClicked(option)} key={option.label}>
-                <Text>{option.label}</Text>
-              </ListItem>
-            ) : null,
-          )}
-        </DropDownList>
-      </DropDownListContainer>
-    </DropDownContainer>
-  )
+    return (
+        <DropDownContainer isOpen={isOpen} ref={containerRef} {...containerSize}>
+            {containerSize.width !== 0 && (
+                <DropDownHeader onClick={toggling}>
+                    <Text>{selectedOption.label}</Text>
+                </DropDownHeader>
+            )}
+            <ArrowDropDownIcon color="text" onClick={toggling} />
+            <DropDownListContainer>
+                <DropDownList ref={dropdownRef}>
+                    {options.map((option) =>
+                        option.label !== selectedOption.label ? (
+                            <ListItem onClick={onOptionClicked(option)} key={option.label}>
+                                <Text>{option.label}</Text>
+                            </ListItem>
+                        ) : null,
+                    )}
+                </DropDownList>
+            </DropDownListContainer>
+        </DropDownContainer>
+    )
 }
 
 export default Select

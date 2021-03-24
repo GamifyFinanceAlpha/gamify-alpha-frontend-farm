@@ -32,12 +32,6 @@ a:hover, a:focus {
     }
 }
 
-/* Dark BG for cards */
-
-.card-bg-dark {
-    background-color: #222 !important;
-}
-
 /* navbar */
 
 .navbar2 .container {
